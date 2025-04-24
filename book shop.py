@@ -7,10 +7,23 @@ def add_new_book():
     genre = input("Введите жанр книги: ")
     year = input("Введите год издания книги: ")
 
+    return Book(title, author, genre, year)
 
-    new_book = Book(title, author, genre, year)
-    return new_book
+def search_books(catalog):
+    keyword = input("Введите ключевое слово для поиска: ")
+    results = catalog.search_books(keyword)
 
+    if results:
+        print("\nРезультаты поиска:")
+        print('Название | Автор | Жанр | Год')
+        for book in results:
+            print(book)
+    else:
+        print("Книг по заданному критерию не найдено.")
+
+def remove_book(catalog):
+    title = input("Введите название книги для удаления: ")
+    catalog.remove_book(title)
 
 def main():
     catalog = Catalog()
@@ -19,7 +32,9 @@ def main():
         print("\nМеню:")
         print("1. Добавить новую книгу")
         print("2. Показать каталог книг")
-        print("3. Выход")
+        print("3. Удалить книгу")
+        print("4. Найти книгу")
+        print("5. Выход")
 
         choice = input("Выберите действие: ")
 
@@ -28,9 +43,12 @@ def main():
             catalog.add_book(new_book)
             print("Книга добавлена в каталог.")
         elif choice == '2':
-            print("\nКаталог книг:")
             catalog.show_catalog()
         elif choice == '3':
+            remove_book(catalog)
+        elif choice == '4':
+            search_books(catalog)
+        elif choice == '5':
             print("Выход из программы.")
             break
         else:
